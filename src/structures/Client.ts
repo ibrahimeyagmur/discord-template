@@ -1,5 +1,5 @@
 import { Client, GatewayIntentBits, Collection } from "discord.js";
-import { PrefixCommand, SlashCommand } from "../types";
+import type { PrefixCommand, SlashCommand } from "../types";
 import config from "../config";
 import { readdirSync } from "fs";
 import { join } from "path";
@@ -23,7 +23,7 @@ export class BotClient extends Client {
   public async loadCommands() {
     const commandPath = join(__dirname, "../commands/command");
     const commandFiles = readdirSync(commandPath).filter(
-      (file) => file.endsWith(".ts") || file.endsWith(".js")
+      (file) => (file.endsWith(".ts") && !file.endsWith(".d.ts")) || file.endsWith(".js")
     );
 
     for (const file of commandFiles) {
@@ -41,7 +41,7 @@ export class BotClient extends Client {
 
     const slashPath = join(__dirname, "../commands/app");
     const slashFiles = readdirSync(slashPath).filter(
-      (file) => file.endsWith(".ts") || file.endsWith(".js")
+      (file) => (file.endsWith(".ts") && !file.endsWith(".d.ts")) || file.endsWith(".js")
     );
 
     for (const file of slashFiles) {
@@ -56,7 +56,7 @@ export class BotClient extends Client {
   public async loadEvents() {
     const eventPath = join(__dirname, "../events");
     const eventFiles = readdirSync(eventPath).filter(
-      (file) => file.endsWith(".ts") || file.endsWith(".js")
+      (file) => (file.endsWith(".ts") && !file.endsWith(".d.ts")) || file.endsWith(".js")
     );
 
     for (const file of eventFiles) {
